@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Writing Rating Form (5 paragraphs)</title>
+<style>
+:root{--bg:#f4f1fa;--card:#fff;--ink:#1f1b2e;--mut:#5e5873;--line:#d9d3e8;--acc:#5b3fd0;--acc-ink:#fff;--sel:#5b3fd0;--ok:#1b7f4b;--warn:#a15c00;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15121f;--card:#201c30;--ink:#ece9f7;--mut:#a9a3c0;--line:#3a3452;--acc:#9d86ff;--acc-ink:#15121f;--sel:#9d86ff;--ok:#5fd394;--warn:#f0b35a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15121f;--card:#201c30;--ink:#ece9f7;--mut:#a9a3c0;--line:#3a3452;--acc:#9d86ff;--acc-ink:#15121f;--sel:#9d86ff;--ok:#5fd394;--warn:#f0b35a;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+main{max-width:780px;margin:0 auto;padding:16px 16px 64px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 14px}
+h1{font-size:1.5rem;margin:.2em 0 .4em}h2{font-size:1.1rem;margin:0 0 .4em}
+p{margin:.4em 0}.mut{color:var(--mut);font-size:.92rem}
+input[type=text],textarea{width:100%;box-sizing:border-box;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px}
+textarea{min-height:84px;resize:vertical}
+button{font:inherit;min-height:48px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 16px;cursor:pointer}
+button.pri{background:var(--acc);color:var(--acc-ink);border-color:var(--acc);font-weight:600}
+button:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row>.grow{flex:1}
+.top{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:8px 0;z-index:5}
+.bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden}.bar>i{display:block;height:100%;background:var(--acc)}
+.para{white-space:pre-wrap;overflow-wrap:anywhere;max-height:52vh;overflow-y:auto;-webkit-overflow-scrolling:touch;font-size:1.05rem;line-height:1.6}
+.note{border-left:4px solid var(--acc);padding:8px 12px;background:var(--bg);border-radius:6px;font-size:.95rem}
+.cat{border-top:1px solid var(--line);padding:14px 0}.cat:first-of-type{border-top:0}
+.cat h3{margin:0;font-size:1.02rem}.cat .q{color:var(--mut);font-size:.93rem;margin:2px 0 10px}
+.rg{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.rb{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:56px;padding:6px 2px;line-height:1.15}
+.rb b{font-size:1.15rem}.rb span{font-size:.7rem}
+.rb[aria-pressed=true]{background:var(--sel);color:var(--acc-ink);border-color:var(--sel)}
+.chip{font-size:.85rem;padding:2px 10px;border-radius:99px;border:1px solid var(--line)}
+.chip.ok{color:var(--ok);border-color:var(--ok)}.chip.no{color:var(--warn);border-color:var(--warn)}
+.hide{display:none}#msg{min-height:1.4em;font-size:.93rem}
+@media (max-width:480px){.rb span{font-size:.62rem}}
+</style></head><body><main>
+<div id="app"></div>
+<div class="card" id="tools">
+<h2>Save &amp; download</h2>
+<p class="mut" id="storeNote"></p>
+<div class="row"><button class="pri" id="dlCsv">Download ratings as CSV</button><button id="dlBak">Download backup (resume file)</button><button id="impBtn">Import backup…</button><input type="file" id="impFile" accept=".json,application/json" class="hide"></div>
+<p id="msg" role="status"></p>
+<textarea id="fallback" class="hide" readonly aria-label="CSV text to copy"></textarea>
+<p class="mut"><b>Download your ratings and send the file to the researcher.</b> Nothing is sent automatically.</p>
+</div></main>
+<script type="application/json" id="d">{"samples": [["P002/1", "As an Indian girl i have also seen that the society has different earnspctton for girls and boys. When I look around I see that thousands of women threw away their own aspirations to fulfill society's perspective. Literally for the sake of love safety they have built barriers within girls. \nAlthough we are the 21st century an expectation from girl changes post-marriage but there is no change in expectation from boy. \nIn march we manged to win my battle for myself and other women as well, fighting for freedom and independence and for a patriarchal society that bulldozes women. This has been a lesson for lifetime, while treating with respect certain traditions but we have to question few, forced us to speak against unjust instead of accepting the fate."], ["P005/2", "Sometimes I wonder what my life would have been like if I had continued studying at my old school in the US. I often think about how much my friends have influenced the person I have become, even though some of them have only been part of my life for a few years. I had spent around 16 years of my life in Oman, so moving away was a huge change for me. I still remember packing my entire life into a small suitcase and getting on a flight to Kochi. At that time, I felt excited but also confused about what was waiting for me. I remember the smell inside the plane, people wearing masks, the smoke outside as the plane was moving and the tiny window beside me. I had convinced myself that moving would be easy and that everything would become better, but when the moment actually came, I suddenly felt very emotional. I tried to smile, but I could feel my lips trembling as the plane took off and I began my new life in Kochi."], ["P007/3", "One evening during heavy rain, our family sat together because the weather made it difficult to go outside. We had tea and snacks and talked for a long time. Nobody was using a phone or watching anything. It was just a simple family evening, but I remember enjoying the togetherness."], ["P010/1", "Our annual end-of-summer gathering at my grandparents' house has always served as a constant I could count on. Every August, cousins I'd never seen would drive from other states to turn the little farm in the middle of nowhere into a hive of quiet laughter and heat-from-berry-combusting smells and self-controlled ~super-hot~ barbecue sauce. Long before the first car pulled into the driveway, my grandma's burners would be toasting delicious (and never-complained-about) disasters like roasted vegetables and biscuit dough. \nWe'd spend the afternoons darting through the unkempt orchard or catching dinner-sized snacks of garden-fresh tomatoes before cooling off in the creek. \nWhen sunset hit, all the chairs would fold into one another around the large wooden picnic table, which was strung up with lights and set in-between two giant oaks. Stories would be told (and with time, exaggerated; with time, nostalgic) as three heavy plastic serving trays of food went around and around, followed by the adults' soft-murmuring giggles on the lawn, while blankets were clomped over the grass and eyes turned to the moon. It was never about spectacular locations or Parisian souvenirs; rather, the simple (and repetitive) occurrence of family coming together always made me feel at home."], ["P013/2", "One place I particularly enjoy visiting is the beach. I like sitting near the sea and watching the waves, especially in the evening. The sound of the water and the cool breeze make me feel calm and peaceful. Sometimes I visit with my family or friends, while at other times I simply enjoy walking along the shore. Spending quiet time near the sea helps me clear my mind and return feeling refreshed and relaxed."]]}</script>
+<script>
+(function(){
+var D=JSON.parse(document.getElementById('d').textContent);
+var TRIAL=false,MODE='5samples';
+var CATS=[["Cultural specificity","Does the writing include personal, local, Indian cultural, or community-based details?"],
+["Personal voice","Does the writing sound natural, individual, and student-like?"],
+["AI-like polish","Does the writing sound overly polished, formal, generic, or AI-like?"],
+["Language accuracy","Is the grammar, vocabulary, and sentence structure clear?"],
+["Generalized or Western tone","Does the writing sound global, neutral, or Western rather than culturally specific?"],
+["Emotional expression","How clearly does the writing express emotion, personality, or personal feeling?"],
+["Organization","Is the writing clearly structured and easy to follow?"]];
+var LAB=["Very low","Low","Medium","High","Very high"];
+var pool=D.samples;
+var TEXT={};pool.forEach(function(s){TEXT[s[0]]=s[1]});
+var LS=(function(){try{var k='__t';localStorage.setItem(k,'1');localStorage.removeItem(k);return localStorage}catch(e){return null}})();
+var $=function(i){return document.getElementById(i)};
+var S=null;
+var skey=function(n){return 'ratingform-v1|'+MODE+'|'+n.trim().toLowerCase()};
+function persist(){if(LS&&S){try{LS.setItem(skey(S.evaluator),JSON.stringify(S))}catch(e){}}}
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function shuffled(codes,seed){var r=rng(seed),a=codes.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function blank(){return{s:[null,null,null,null,null,null,null],c:''}}
+function rec(code){return S.ratings[code]||(S.ratings[code]=blank())}
+function done(code){var r=S.ratings[code];return !!r&&r.s.every(function(v){return v!==null})}
+function nDone(){return S.order.filter(done).length}
+function newState(name){var seed=Math.floor(Math.random()*4294967295);return{format:'rating-backup-v1',mode:MODE,evaluator:name.trim(),seed:seed,order:pool.map(function(s){return s[0]}),ratings:{},idx:0}}
+function csvCell(v){v=String(v==null?'':v);return /[",\r\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function guard(v){return /^[=+\-@\t\r]/.test(v)?"'"+v:v}
+function buildCSV(){var rows=[['Evaluator','Hidden writing code','Paragraph'].concat(CATS.map(function(c){return c[0]}),['Comments'])];
+S.order.forEach(function(code){var r=S.ratings[code]||blank();rows.push([guard(S.evaluator),code,TEXT[code]].concat(r.s.map(function(v){return v===null?'':v}),[guard(r.c)]))});
+return '\uFEFF'+rows.map(function(r){return r.map(csvCell).join(',')}).join('\r\n')+'\r\n'}
+function msg(t,bad){var m=$('msg');m.textContent=t;m.style.color=bad?'var(--warn)':'var(--ok)'}
+function fname(ext,tag){var n=S.evaluator.replace(/[^A-Za-z0-9_-]+/g,'_').slice(0,40)||'evaluator';return tag+'_'+n+'_'+MODE+'_'+new Date().toISOString().slice(0,10)+'.'+ext}
+async function save(ext,tag,data,label){
+ if(!S){msg('Enter your name or code first.',true);return}
+ var dl=null;try{dl=window.claude&&claude.use?await claude.use('downloads'):null}catch(e){}
+ if(!dl){try{var b=new Blob([data],{type:ext==='csv'?'text/csv;charset=utf-8':'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=fname(ext,tag);document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);msg(label+' downloaded. Check your Downloads folder (the Files app on an iPad).'+(ext==='csv'?' Now email the CSV file to the researcher.':''))}catch(e){var f=$('fallback');f.value=data;f.classList.remove('hide');msg('The download did not start. Copy the text below into a file named '+fname(ext,tag)+'.',true)}return}
+ try{await dl.save({filename:fname(ext,tag),data:data});msg(label+' saved. Send the CSV file to the researcher.')}
+ catch(e){msg(e&&e.code==='declined'?'Download cancelled.':'Download failed ('+(e&&e.code||'error')+'). Please try again.',true)}}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function start(){
+ $('tools').classList.add('hide');
+ $('app').innerHTML='<div class="card"><h1>Writing rating form (5 paragraphs)</h1>'+(TRIAL?'<p class="note"><b>Trial mode:</b> 15 paragraphs.</p>':'')+
+ '<p>You will read <b>5 short paragraphs</b>, one at a time, and score each on seven characteristics. It takes about 5–10 minutes in total. You can stop and come back later.</p>'+
+ '<label for="nm"><b>Your name or code</b></label><input type="text" id="nm" autocomplete="off" autocapitalize="off" placeholder="e.g. Evaluator A">'+
+ '<p class="mut">If you used this form before on this device, enter the same name or code to continue where you left off.</p>'+
+ '<div class="row"><button class="pri" id="go">Start / continue</button><button id="imp2">Import a backup file…</button></div><p id="msg0" class="mut" role="status"></p></div>';
+ $('go').onclick=function(){var n=$('nm').value.trim();if(!n){$('msg0').textContent='Please enter a name or code.';return}
+  var old=null;if(LS){try{old=JSON.parse(LS.getItem(skey(n)))}catch(e){}}
+  S=(old&&old.order&&old.order.length===pool.length)?old:newState(n);S.evaluator=n;persist();rate()};
+ $('imp2').onclick=function(){$('impFile').click()};
+}
+function rate(){
+ $('tools').classList.remove('hide');
+ $('storeNote').textContent=LS?'Your answers are saved automatically in this browser on this device. They survive closing the page, but are not saved to other devices and can be lost if browser data is cleared, so download a backup now and then.':'This browser cannot save progress, so keep this page open and use the backup download.';
+ var code=S.order[S.idx],r=rec(code),total=S.order.length,d=nDone();
+ var cats=CATS.map(function(c,i){var b='';for(var v=1;v<=5;v++)b+='<button class="rb" data-i="'+i+'" data-v="'+v+'" aria-pressed="'+(r.s[i]===v)+'" aria-label="'+esc(c[0])+': '+v+' '+LAB[v-1]+'"><b>'+v+'</b><span>'+LAB[v-1]+'</span></button>';
+  return '<div class="cat"><h3>'+(i+1)+'. '+esc(c[0])+'</h3><p class="q">'+esc(c[1])+'</p><div class="rg" role="group" aria-label="'+esc(c[0])+'">'+b+'</div></div>'}).join('');
+ var c7=r.s.filter(function(v){return v!==null}).length;
+ $('app').innerHTML='<div class="top"><div class="row"><b class="grow">Paragraph '+(S.idx+1)+' of '+total+'</b><span class="chip '+(d===total?'ok':'')+'">'+d+' of '+total+' completed</span></div><div class="bar" aria-hidden="true"><i style="width:'+(d/total*100)+'%"></i></div></div>'+
+ (TRIAL?'<p class="mut">Trial mode</p>':'')+
+ '<div class="card"><div class="para" id="para" tabindex="0"></div></div>'+
+ '<div class="card"><p class="note">A higher score means more of the characteristic named—not necessarily better writing. Rate only what you observe in the paragraph. Do not try to identify its author or how it was produced.</p><p class="mut">1 = Very low · 2 = Low · 3 = Medium · 4 = High · 5 = Very high</p>'+cats+
+ '<div class="cat"><h3>Comments (optional)</h3><textarea id="cm" aria-label="Comments"></textarea></div></div>'+
+ '<div class="row"><button id="prev"'+(S.idx===0?' disabled':'')+'>← Previous</button><span class="chip grow '+(c7===7?'ok':'no')+'" style="text-align:center">'+(c7===7?'Complete':c7+' of 7 rated')+'</span><button class="pri" id="next">'+(S.idx===total-1?'Finish':'Next →')+'</button></div>';
+ $('para').textContent=TEXT[code];$('cm').value=r.c;
+ $('cm').oninput=function(){rec(code).c=this.value;persist()};
+ $('prev').onclick=function(){go(S.idx-1)};$('next').onclick=function(){S.idx===total-1?finish():go(S.idx+1)};
+ [].forEach.call(document.querySelectorAll('.rb'),function(b){b.onclick=function(){var i=+b.dataset.i,v=+b.dataset.v,x=rec(code);x.s[i]=(x.s[i]===v)?null:v;persist();var y=window.scrollY;rate();window.scrollTo(0,y)}})}
+function go(i){S.idx=Math.max(0,Math.min(S.order.length-1,i));persist();rate();window.scrollTo(0,0)}
+function finish(){var d=nDone(),t=S.order.length;persist();
+ $('app').innerHTML='<div class="card"><h1>'+(d===t?'All done—thank you!':'End of the list')+'</h1><p>'+d+' of '+t+' paragraphs completed.'+(d<t?' Use Previous to go back and finish the rest, or download what you have now.':'')+'</p><p><b>Download your ratings and send the file to the researcher.</b></p><div class="row"><button id="back">← Back to paragraphs</button></div></div>';
+ $('back').onclick=function(){go(t-1)};window.scrollTo(0,0)}
+$('dlCsv').onclick=function(){save('csv','ratings',buildCSV(),'Ratings CSV')};
+$('dlBak').onclick=function(){if(S)save('json','backup',JSON.stringify(S),'Backup');else msg('Enter your name or code first.',true)};
+$('impBtn').onclick=function(){$('impFile').click()};
+$('impFile').onchange=function(){var f=this.files[0];this.value='';if(!f)return;var fr=new FileReader();
+ fr.onload=function(){try{var o=JSON.parse(fr.result);
+  if(o.format!=='rating-backup-v1'||typeof o.evaluator!=='string')throw'This is not a backup file from this form.';
+  if(o.mode!==MODE)throw'This backup is for '+o.mode+' mode. Open the '+o.mode+' version of the form to use it.';
+  if(!Array.isArray(o.order)||o.order.length!==pool.length||!o.order.every(function(c){return TEXT[c]!==undefined})||new Set(o.order).size!==pool.length)throw'This backup does not match the paragraphs in this form.';
+  var rt={};Object.keys(o.ratings||{}).forEach(function(c){var r=o.ratings[c];if(TEXT[c]===undefined||!r||!Array.isArray(r.s)||r.s.length!==7)throw'Backup contains invalid ratings.';
+   rt[c]={s:r.s.map(function(v){if(v===null)return null;if(!(v>=1&&v<=5&&Math.floor(v)===v))throw'Backup contains invalid scores.';return v}),c:String(r.c||'')}});
+  S={format:o.format,mode:MODE,evaluator:o.evaluator,seed:o.seed,order:o.order,ratings:rt,idx:Math.max(0,Math.min(o.order.length-1,+o.idx||0))};
+  persist();rate();msg('Backup imported: '+nDone()+' of '+S.order.length+' paragraphs completed.')}catch(e){var t=typeof e==='string'?e:'Could not read that file.';msg(t,true);var m0=$('msg0');if(m0)m0.textContent=t}};
+ fr.readAsText(f)};
+start();
+})();
+</script></body></html>
